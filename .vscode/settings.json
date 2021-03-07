@@ -1,6 +1,7 @@
 {
   "files.associations": {
     "main.h": "c",
-    "sysclk.h": "c"
+    "sysclk.h": "c",
+    "servo.h": "c"
   }
 }

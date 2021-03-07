@@ -11,5 +11,12 @@ typedef struct {
   float min, max;
 } servo_group_t;
 
+/**
+ * Initializes a group of servos.
+ */
 void servo_group_init(servo_group_t *group);
+
+/**
+ * Moves the servo to the given number of degrees.
+ */
 void servo_move(servo_group_t *group, uint8_t n, float deg);

@@ -1,5 +1,8 @@
 #include "servo.h"
 
+/**
+ * Initializes a group of servos.
+ */
 void servo_group_init(servo_group_t *group) {
   TIM_TypeDef *TIM = group->tim;
 
@@ -47,9 +50,10 @@ void servo_group_init(servo_group_t *group) {
   TIM->CR1 |= TIM_CR1_CEN;
 }
 
+/**
+ * Moves the servo to the given number of degrees.
+ */
 void servo_move(servo_group_t *group, uint8_t n, float deg) {
-  float dP = deg / group->degrees;
-  float v = group->min + ((group->max - group->min) * dP);
-
+  float v = group->min + ((group->max - group->min) * (deg / group->degrees));
   (&group->tim->CCR1)[n] = (uint32_t) ((((float) SERVO_TIM_ARR) / 20.f) * v);
 }
