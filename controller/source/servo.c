@@ -1,3 +1,7 @@
+/*
+  Copyright Luke A.C.A. Rieff 2020 - All Rights Reserved
+*/
+
 #include "servo.h"
 
 /**
