@@ -25,8 +25,7 @@ GCC_ARGS += -I./include
 GCC_ARGS += -I./vendor
 GCC_ARGS += -I./vendor/sdk/sdk/sdk/include
 GCC_ARGS += -I./vendor/sdk/sdk/sdk/src
-GCC_ARGS += -I/usr/include/panda3d
-GCC_ARGS += -lp3framework -lpanda -lpandafx -lpandaexpress -lp3dtoolconfig -lp3dtool -lp3pystub -lp3direct
+GCC_ARGS +=  -I/usr/include/panda3d -L/usr/lib/panda3d
 GCC_ARGS += $(shell pkg-config --cflags eigen3)
 
 #
