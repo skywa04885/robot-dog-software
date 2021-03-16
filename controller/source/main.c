@@ -25,7 +25,25 @@ servo_group_t servo_group_hs805mg = {
   .min = HS805MG_MIN, .max = HS805MG_MAX
 };
 
-void servos_init() {
+#define REG_STATUS_RDY (1 << 0);
+
+typedef struct __attribute__ (( "packed" )) {
+  uint8_t _reg_status;
+  uint8_t _reg_motorctl;
+  float _reg_servo_a1_tpos;
+  float _reg_servo_a2_tpos;
+  float _reg_servo_a3_tpos;
+  float _reg_servo_b1_tpos;
+  float _reg_servo_b2_tpos;
+  float _reg_servo_b3_tpos;
+  float _reg_servo_c1_tpos;
+  float _reg_servo_c2_tpos;
+  float _reg_servo_c3_tpos;
+} registers_t;
+
+volatile registers_t __attribute__ (( section("bss") )) registers;
+
+void servos_init (void) {
   //
   // Initializes MG996R servo's
   //
@@ -60,12 +78,38 @@ void servos_init() {
   servo_group_init(&servo_group_hs805mg);
 }
 
-int32_t main(void) {
+#define SPI_CMD_RSET 0x00 /* Software Reset */
+#define SPI_CMD_RDCR 0x01 /* Read CR */
+#define SPI_CMD_WRCR 0x02 /* Write CR */
+#define SPI_CMD_BSCR 0x03 /* Is bit set CR */
+#define SPI_CMD_BCCR 0x04 /* Is bit clear CR */
+#define SPI_CMD_SBCR 0x05 /* Set bit CR */
+#define SPI_CMD_CBCR 0x06 /* Clear bit CR */
+
+void SPI1_IRQHandler (void) {
+  while (SPI1->SR & SPI1_SR_RXP) {
+    uint8_t data = *((volatile uint8_t *) &SPI1->RXDR);
+  }
+}
+
+/**
+ * Initializes the SPI hardware in slave mode.
+ */
+void spi_slave_init (void) {
+  SPI1->CR1 = SPI_CR1_SPE;
+  SPI1->IER = SPI_IER_RXPIE;
+}
+
+int32_t main (void) {
+  // Initializes the CPU clock, to 480 Mhz, and configures one of the timers
+  //  to be used for delay.
   sysclk_init();
   delay_init();
 
+  // Enables the required peripheral clocks.
   RCC->AHB4ENR |= RCC_AHB4ENR_GPIOAEN | RCC_AHB4ENR_GPIOBEN;
 
+  // Performs some clock-required peripheral initialization.
   servos_init();
 
   for (;;) {
