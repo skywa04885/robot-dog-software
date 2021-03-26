@@ -16,7 +16,7 @@ typedef struct __attribute__ (( packed )) {
 } ssfp_usart_fifo_frame_t;
 
 typedef struct {
-    uint8_t     *buffer;    /* The Memory Buffer */
+    uint8_t    *buffer;     /* The Memory Buffer */
     uint16_t    size,       /* The Memory Buffer Size */
                 write,      /* Write Pointer */
                 read;       /* Read Pointer */
@@ -27,6 +27,13 @@ typedef enum {
     FRAME = 1,              /* In Frame State (receiving frame) */
     POSSIBLE_CONTROL = 2    /* In Possible Control Bytes Detected (START) */
 } ssfp_usart_statename_t;
+
+typedef struct {
+    ssfp_usart_statename_t  sn;         /* State Name */
+    uint8_t                 *b;         /* The Buffer */
+    uint16_t                btotal,     /* The Buffer Size */
+                            bused;      /* The Bytes Used in buffer */
+} ssfp_usart_state_t;
 
 void __ssfp_usart_fifo_write_byte(uint8_t byte);
 bool __ssfp_usart_fifo_write_bytes(const uint8_t *bytes, uint16_t size);

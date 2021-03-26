@@ -33,6 +33,9 @@ bool __ssfp_usart_fifo_write_bytes(const uint8_t *bytes, uint16_t size) {
 }
 
 void USART1_IRQHandler(void) {
+    if (USART1->ISR & USART_ISR_RXNE_RXFNE) {
+        const uint8_t byte = *((uint8_t *) &USART1->RDR);
+    }
 }
 
 void __ssfp_usart_write_byte(uint8_t byte) {

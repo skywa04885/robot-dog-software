@@ -75,13 +75,13 @@ typedef enum {
 } ssfp_servo_pkt_op_t;
 
 typedef struct __attribute__ (( packed )) {
+    uint8_t                 id;     /* The Servo ID */
+    float                   v;      /* The Value For The Servo */
+    uint8_t                 n[0];   /* The Next Servo */
+} ssfp_servo_pos_t;
+
+typedef struct __attribute__ (( packed )) {
     ssfp_servo_pkt_op_t     op;     /* Opcode */
     uint8_t                 cnt;    /* Read/Write, Servo Data Count */
     ssfp_servo_pos_t        d[0];   /* The Data */
 } ssfp_servo_pkt_t;
-
-typedef struct __attribute__ (( packed )) {
-    uint8_t                 n;      /* The Servo ID */
-    float                   v;      /* The Value For The Servo */
-    ssfp_servo_pos_t        n[0];   /* The Next Servo */
-} ssfp_servo_pos_t;
