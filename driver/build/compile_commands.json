@@ -1,8 +1,0 @@
-[
-  {
-    "directory": "/media/luke/Data/robot-dog-software/driver/build",
-    "command": "c++ -Imain@exe -I. -I.. -I../include -I../vendor/sdk/sdk/sdk/include -I../vendor/sdk/sdk/sdk/src -I/usr/include/eigen3 -fdiagnostics-color=always -pipe -D_FILE_OFFSET_BITS=64 -Wall -Winvalid-pch -Wnon-virtual-dtor -std=c++17 -g -MD -MQ 'main@exe/source_main.cc.o' -MF 'main@exe/source_main.cc.o.d' -o 'main@exe/source_main.cc.o' -c ../source/main.cc",
-    "file": "../source/main.cc",
-    "output": "main@exe/source_main.cc.o"
-  }
-]

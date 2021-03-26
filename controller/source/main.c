@@ -7,6 +7,8 @@
 #include "servo.h"
 #include "delay.h"
 
+#include "../../shared/include/ssfp_servo.h"
+
 servo_group_t servo_group_mg996r = {
   /* Hardware Configuration */
   .tim = TIM4,
@@ -24,24 +26,6 @@ servo_group_t servo_group_hs805mg = {
   /* 0 - 180 Degrees */
   .min = HS805MG_MIN, .max = HS805MG_MAX
 };
-
-#define REG_STATUS_RDY (1 << 0);
-
-typedef struct __attribute__ (( "packed" )) {
-  uint8_t _reg_status;
-  uint8_t _reg_motorctl;
-  float _reg_servo_a1_tpos;
-  float _reg_servo_a2_tpos;
-  float _reg_servo_a3_tpos;
-  float _reg_servo_b1_tpos;
-  float _reg_servo_b2_tpos;
-  float _reg_servo_b3_tpos;
-  float _reg_servo_c1_tpos;
-  float _reg_servo_c2_tpos;
-  float _reg_servo_c3_tpos;
-} registers_t;
-
-volatile registers_t __attribute__ (( section("bss") )) registers;
 
 void servos_init (void) {
   //
@@ -85,12 +69,6 @@ void servos_init (void) {
 #define SPI_CMD_BCCR 0x04 /* Is bit clear CR */
 #define SPI_CMD_SBCR 0x05 /* Set bit CR */
 #define SPI_CMD_CBCR 0x06 /* Clear bit CR */
-
-void SPI1_IRQHandler (void) {
-  while (SPI1->SR & SPI1_SR_RXP) {
-    uint8_t data = *((volatile uint8_t *) &SPI1->RXDR);
-  }
-}
 
 /**
  * Initializes the SPI hardware in slave mode.

@@ -30,6 +30,7 @@ GCC_ARGS += -mthumb
 GCC_ARGS += -mcpu=$(MCPU)
 GCC_ARGS += -Wall
 GCC_ARGS += -I./include
+GCC_ARGS += -I../shared/include
 GCC_ARGS += -I./vendor
 
 LINKER_ARGS += -T linker.ld
@@ -48,21 +49,22 @@ FLASH_ARGS += 0x8000000
 #
 
 SOURCES := $(shell find source -name "*.c")
+SOURCES += $(shell find ../shared/source -name "*.c")
 
-OBJECTS := $(SOURCES:.c=.o)
+OBJECTS := $(SOURCES:.c=.arm.o)
 
 #
 # Make Rules.
 #
 
-%.o: %.c
+%.arm.o: %.c
 	$(GCC)  $(GCC_ARGS) -c $< -o $@
 
-%.o: %.s
+%.arm.o: %.s
 	$(GCC) $(GCC_ARGS) -c $< -o $@
 
-all: $(OBJECTS) startup.o
-	$(LINKER) $(LINKER_ARGS) $(OBJECTS) startup.o -o main.elf
+all: $(OBJECTS) startup.arm.o
+	$(LINKER) $(LINKER_ARGS) $(OBJECTS) startup.arm.o -o main.elf
 bin:
 	$(OBJCOPY) main.elf -O binary main.bin
 size:
@@ -70,4 +72,4 @@ size:
 flash:
 	$(FLASH) $(FLASH_ARGS)
 clean:
-	rm -rf $(OBJECTS) main.bin
+	rm -rf $(OBJECTS) startup.arm.o main.bin
