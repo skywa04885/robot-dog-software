@@ -1,0 +1,3 @@
+-I./include
+-I./vendor
+-DCONTROLLER_COMPILE

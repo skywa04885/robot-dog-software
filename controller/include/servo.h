@@ -2,9 +2,9 @@
   Copyright Luke A.C.A. Rieff 2020 - All Rights Reserved
 */
 
-#pragma once
-
 #include "stm32h750xx.h"
+
+#pragma once
 
 #define SERVO_TIM_PSC 2000      /* 120,000,000Hz / 2,000 = 60,000Hz */
 #define SERVO_TIM_ARR 1200      /* 60,000Hz / 1,200 = 50Hz */

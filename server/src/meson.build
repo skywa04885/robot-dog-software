@@ -1,3 +1,4 @@
 sources += files(
-    'control.cc'
+    'control.c',
+    'ssfp_usart.c'
 )

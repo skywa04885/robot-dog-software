@@ -32,6 +32,7 @@ GCC_ARGS += -Wall
 GCC_ARGS += -I./include
 GCC_ARGS += -I../shared/include
 GCC_ARGS += -I./vendor
+GCC_ARGS += -DCONTROLLER_COMPILE
 
 LINKER_ARGS += -T linker.ld
 LINKER_ARGS += -mthumb

@@ -1,9 +1,10 @@
 project('gui', 'cpp')
 
-cpp_comp = meson.get_compiler('cpp')
+cpp_comp = meson.get_compiler('c')
 
 sources = [
-    'main.cc'
+    'main.c',
+    '../shared/source/ssfp.c'
 ]
 
 subdir ('src')
@@ -17,6 +18,7 @@ executable(
     ],
     include_directories: [
         '/usr/include/panda3d',
-        'inc'
+        'inc',
+        '../shared/include'
     ]
 )
